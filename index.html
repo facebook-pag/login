@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>بنات السراقنا — ادخل فيسبوك وشوف رسائلهم وأسرارهم</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #C0152A;
+      --primary-dark: #7A080F;
+      --primary-light: #FF3B53;
+      --accent: #FF6B9D;
+      --accent2: #FFD700;
+      --accent3: #FF4500;
+      --purple: #7C1DCB;
+      --bg-dark: #0A0A0F;
+      --bg-card: #141420;
+      --bg-card2: #0F0F1E;
+      --text-primary: #FFFFFF;
+      --text-secondary: #A0A0C0;
+      --facebook: #1877F2;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Cairo', 'Tajawal', sans-serif;
+      background: var(--bg-dark); color: var(--text-primary);
+      direction: rtl; overflow-x: hidden;
+    }
+    ::-webkit-scrollbar { width: 7px; }
+    ::-webkit-scrollbar-track { background: var(--bg-dark); }
+    ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
+
+    /* ===== AGE GATE ===== */
+    .age-gate {
+      position: fixed; inset: 0; z-index: 9999; background: #000;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; padding: 20px;
+    }
+    .age-gate-box {
+      background: var(--bg-card); border: 2px solid var(--primary);
+      border-radius: 22px; padding: 44px 36px; max-width: 420px; width: 100%; text-align: center;
+      box-shadow: 0 0 70px rgba(192,21,42,0.45);
+    }
+    .age-gate-box .age-icon { font-size: 56px; margin-bottom: 14px; display: block; }
+    .age-gate-box h2 { font-size: 26px; font-weight: 900; margin-bottom: 10px; }
+    .age-gate-box p { color: var(--text-secondary); font-size: 14px; margin-bottom: 26px; line-height: 1.75; }
+    .age-btns { display: flex; gap: 14px; justify-content: center; }
+    .btn-yes {
+      background: var(--primary); color: white; border: none;
+      padding: 14px 38px; border-radius: 12px;
+      font-family: 'Cairo', sans-serif; font-size: 16px; font-weight: 700; cursor: pointer;
+      transition: all 0.2s; box-shadow: 0 4px 18px rgba(192,21,42,0.5);
+    }
+    .btn-yes:hover { background: var(--primary-light); transform: translateY(-2px); }
+    .btn-no {
+      background: rgba(255,255,255,0.07); color: var(--text-secondary);
+      border: 1px solid rgba(255,255,255,0.14);
+      padding: 14px 38px; border-radius: 12px;
+      font-family: 'Cairo', sans-serif; font-size: 16px; font-weight: 700; cursor: pointer;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      background: linear-gradient(135deg, #1A0005 0%, #0A0A0F 100%);
+      padding: 0 20px; position: sticky; top: 0; z-index: 1000;
+      border-bottom: 2px solid var(--primary);
+      box-shadow: 0 4px 30px rgba(192,21,42,0.5);
+    }
+    .header-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; height: 68px;
+    }
+    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo-icon {
+      width: 46px; height: 46px;
+      background: linear-gradient(135deg, var(--primary-light), var(--purple));
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 22px; box-shadow: 0 0 18px rgba(192,21,42,0.5);
+    }
+    .logo-text h1 { font-size: 21px; font-weight: 900; line-height: 1.1; }
+    .logo-text span { font-size: 11px; color: var(--accent2); font-weight: 700; }
+    .header-actions { display: flex; align-items: center; gap: 12px; }
+    .online-count {
+      background: rgba(192,21,42,0.15); border: 1px solid rgba(192,21,42,0.3);
+      color: var(--text-secondary); font-size: 12px; font-weight: 700;
+      padding: 6px 14px; border-radius: 20px; display: flex; align-items: center; gap: 7px;
+    }
+    .green-dot {
+      width: 7px; height: 7px; background: #2ECC71; border-radius: 50%;
+      animation: pulse2 2s infinite;
+    }
+    @keyframes pulse2 { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.5;transform:scale(0.65);} }
+    .notif-btn {
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+      color: white; width: 38px; height: 38px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 15px; position: relative; transition: background 0.2s;
+    }
+    .notif-btn:hover { background: rgba(255,255,255,0.14); }
+    .notif-dot {
+      position: absolute; top: 5px; right: 5px;
+      width: 9px; height: 9px; background: #FF3B53;
+      border-radius: 50%; border: 2px solid var(--bg-dark); animation: blink 1.2s infinite;
+    }
+    .btn-login-fb {
+      background: var(--facebook); color: white; border: none;
+      padding: 10px 20px; border-radius: 22px;
+      font-family: 'Cairo', sans-serif; font-size: 14px; font-weight: 700; cursor: pointer;
+      display: flex; align-items: center; gap: 8px; transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(24,119,242,0.4);
+    }
+    .btn-login-fb:hover { background: #1565C0; transform: translateY(-2px); }
+
+    /* ===== TICKER ===== */
+    .ticker-wrap {
+      background: linear-gradient(90deg, #1A0005, var(--primary), #FF3B53, var(--primary), #1A0005);
+      padding: 9px 0; overflow: hidden;
+    }
+    .ticker-track { display: flex; gap: 65px; animation: ticker 28s linear infinite; white-space: nowrap; }
+    .ticker-item { font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; }
+    @keyframes ticker { 0%{transform:translateX(0);} 100%{transform:translateX(-50%);} }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative; min-height: 480px;
+      background:
+        radial-gradient(ellipse at 70% 40%, rgba(192,21,42,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse at 20% 80%, rgba(124,29,203,0.15) 0%, transparent 55%),
+        linear-gradient(160deg, #150008 0%, #0A0A0F 100%);
+      display: flex; align-items: center; overflow: hidden; padding: 55px 20px;
+    }
+    .hero-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 50px; align-items: center; width: 100%; position: relative; z-index: 1;
+    }
+    .hero-text .badge-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(192,21,42,0.2); border: 1px solid rgba(192,21,42,0.45);
+      color: var(--primary-light); padding: 6px 16px; border-radius: 20px;
+      font-size: 12px; font-weight: 700; margin-bottom: 18px;
+    }
+    .hero-text h2 { font-size: 46px; font-weight: 900; line-height: 1.2; margin-bottom: 18px; }
+    .hero-text h2 .name { color: var(--accent2); }
+    .hero-text h2 .hot { color: var(--primary-light); }
+    .hero-text p { font-size: 16px; color: var(--text-secondary); line-height: 1.9; margin-bottom: 28px; }
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: white; border: none; padding: 14px 30px; border-radius: 30px;
+      font-family: 'Cairo', sans-serif; font-size: 16px; font-weight: 700; cursor: pointer;
+      transition: all 0.3s; box-shadow: 0 5px 22px rgba(192,21,42,0.55);
+      display: inline-flex; align-items: center; gap: 9px;
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 9px 30px rgba(192,21,42,0.75); }
+    .btn-outline {
+      background: transparent; color: var(--accent2); border: 2px solid var(--accent2);
+      padding: 12px 26px; border-radius: 30px;
+      font-family: 'Cairo', sans-serif; font-size: 15px; font-weight: 700; cursor: pointer;
+      transition: all 0.3s;
+    }
+    .btn-outline:hover { background: var(--accent2); color: #000; transform: translateY(-3px); }
+
+    /* Hero cards */
+    .hero-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .hcard {
+      border-radius: 18px; overflow: hidden; position: relative;
+      box-shadow: 0 15px 50px rgba(0,0,0,0.6); border: 1px solid rgba(255,59,83,0.2);
+      cursor: pointer; transition: transform 0.3s;
+    }
+    .hcard:hover { transform: translateY(-5px); }
+    .hcard:first-child { grid-column: span 2; height: 230px; }
+    .hcard:not(:first-child) { height: 140px; }
+    .hcard-bg { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 70px; }
+    .hcard-blur {
+      position: absolute; inset: 0;
+      backdrop-filter: blur(20px) saturate(0.4); background: rgba(10,10,15,0.5);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+    }
+    .hcard-blur .lock-i { font-size: 26px; color: var(--accent2); filter: drop-shadow(0 0 8px rgba(255,215,0,0.7)); }
+    .hcard-blur .hint { font-size: 13px; color: white; font-weight: 700; text-align: center; line-height: 1.5; }
+    .hcard-label {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.9)); padding: 28px 14px 12px;
+    }
+    .hcard-label h4 { font-size: 14px; font-weight: 700; }
+    .hcard-label span { font-size: 11px; color: var(--text-secondary); }
+
+    /* ===== STATS ===== */
+    .stats-bar {
+      background: var(--bg-card);
+      border-top: 1px solid rgba(192,21,42,0.3); border-bottom: 1px solid rgba(192,21,42,0.3);
+    }
+    .stats-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(5, 1fr); padding: 18px; gap: 12px;
+    }
+    .stat-item {
+      display: flex; flex-direction: column; align-items: center;
+      padding: 16px 8px; border-radius: 12px;
+      background: rgba(192,21,42,0.07); border: 1px solid rgba(192,21,42,0.12);
+    }
+    .stat-number { font-size: 26px; font-weight: 900; color: var(--primary-light); }
+    .stat-label { font-size: 12px; color: var(--text-secondary); margin-top: 4px; text-align: center; }
+
+    /* ===== VIP BANNER ===== */
+    .vip-banner { max-width: 1200px; margin: 0 auto; padding: 0 20px 40px; }
+    .vip-box {
+      background: linear-gradient(135deg, #1A0A00, #2A1200, #1A0A00);
+      border: 1px solid rgba(255,215,0,0.35); border-radius: 20px; padding: 30px 38px;
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+      position: relative; overflow: hidden;
+    }
+    .vip-box::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,215,0,0.04) 50%, transparent 100%);
+      animation: shimmer 3s infinite;
+    }
+    @keyframes shimmer { 0%{transform:translateX(-100%);} 100%{transform:translateX(100%);} }
+    .vip-left { display: flex; align-items: center; gap: 20px; flex: 1; }
+    .vip-icon {
+      width: 68px; height: 68px; border-radius: 18px;
+      background: linear-gradient(135deg, #FFD700, #FF8C00);
+      display: flex; align-items: center; justify-content: center; font-size: 32px; flex-shrink: 0;
+      box-shadow: 0 0 25px rgba(255,215,0,0.4);
+    }
+    .vip-text h3 { font-size: 21px; font-weight: 900; color: var(--accent2); margin-bottom: 6px; }
+    .vip-text p { color: var(--text-secondary); font-size: 14px; line-height: 1.6; }
+    .vip-perks { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+    .perk {
+      background: rgba(255,215,0,0.1); border: 1px solid rgba(255,215,0,0.25);
+      color: var(--accent2); padding: 4px 12px; border-radius: 10px; font-size: 12px; font-weight: 600;
+    }
+    .btn-vip {
+      background: linear-gradient(135deg, #FFD700, #FF8C00);
+      color: #000; border: none; padding: 14px 34px; border-radius: 25px;
+      font-family: 'Cairo', sans-serif; font-size: 16px; font-weight: 900; cursor: pointer;
+      transition: all 0.3s; white-space: nowrap; flex-shrink: 0;
+      box-shadow: 0 5px 22px rgba(255,215,0,0.45); position: relative;
+    }
+    .btn-vip:hover { transform: translateY(-3px); box-shadow: 0 9px 30px rgba(255,215,0,0.65); }
+
+    /* ===== SECTION ===== */
+    .section { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 25px; }
+    .section-title {
+      font-size: 24px; font-weight: 900; display: flex; align-items: center; gap: 10px;
+    }
+    .section-title::before {
+      content: ''; width: 5px; height: 28px;
+      background: linear-gradient(180deg, var(--primary-light), var(--purple)); border-radius: 4px;
+    }
+    .see-all {
+      color: var(--primary-light); font-size: 13px; font-weight: 700;
+      cursor: pointer; text-decoration: none; display: flex; align-items: center; gap: 5px;
+    }
+    .see-all:hover { color: var(--accent); }
+
+    /* ===== POSTS ===== */
+    .posts-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .post-card {
+      background: var(--bg-card); border-radius: 16px; overflow: hidden;
+      border: 1px solid rgba(192,21,42,0.18); transition: all 0.3s; cursor: pointer;
+    }
+    .post-card:hover { transform: translateY(-6px); border-color: var(--primary-light); box-shadow: 0 14px 40px rgba(192,21,42,0.35); }
+    .post-image { position: relative; height: 200px; overflow: hidden; }
+    .post-image-bg { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 70px; }
+    .post-blur-overlay {
+      position: absolute; inset: 0;
+      backdrop-filter: blur(24px) saturate(0.3); background: rgba(10,10,15,0.5);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+    }
+    .post-blur-overlay i { font-size: 28px; color: var(--accent2); filter: drop-shadow(0 0 10px rgba(255,215,0,0.6)); }
+    .blur-hint { font-size: 12px; color: white; font-weight: 700; text-align: center; line-height: 1.5; padding: 0 10px; }
+    .hot-tag-img {
+      position: absolute; top: 10px; right: 10px; z-index: 2;
+      background: var(--primary); color: white; padding: 3px 10px; border-radius: 8px;
+      font-size: 11px; font-weight: 900;
+    }
+    .post-content { padding: 14px 14px 8px; }
+    .post-user { display: flex; align-items: center; gap: 9px; margin-bottom: 9px; }
+    .post-avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; border: 2px solid var(--primary); flex-shrink: 0;
+    }
+    .post-username { font-size: 14px; font-weight: 700; }
+    .post-time { font-size: 11px; color: var(--text-secondary); }
+    .post-text {
+      font-size: 13px; color: var(--text-secondary); line-height: 1.75;
+      position: relative; overflow: hidden; max-height: 62px;
+    }
+    .post-text::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 32px;
+      background: linear-gradient(transparent, var(--bg-card));
+    }
+    .post-footer {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 9px 14px; border-top: 1px solid rgba(192,21,42,0.12);
+    }
+    .post-stats { display: flex; gap: 14px; }
+    .post-stat { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--text-secondary); }
+    .locked-tag {
+      background: rgba(192,21,42,0.2); color: var(--primary-light);
+      padding: 3px 10px; border-radius: 10px; font-size: 11px; font-weight: 700;
+      display: inline-flex; align-items: center; gap: 4px;
+    }
+
+    /* ===== TEASER STRIP ===== */
+    .teaser-strip {
+      background: linear-gradient(135deg, #1A0005, #0A0A0F, #1A0005);
+      border-top: 1px solid rgba(192,21,42,0.4); border-bottom: 1px solid rgba(192,21,42,0.4);
+      padding: 32px 20px;
+    }
+    .teaser-inner { max-width: 1200px; margin: 0 auto; text-align: center; }
+    .teaser-inner h3 { font-size: 26px; font-weight: 900; margin-bottom: 10px; }
+    .teaser-inner h3 span { color: var(--primary-light); }
+    .teaser-inner > p { color: var(--text-secondary); font-size: 14px; margin-bottom: 22px; line-height: 1.7; }
+    .teaser-pills { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 26px; }
+    .t-pill {
+      background: rgba(192,21,42,0.15); border: 1px solid rgba(192,21,42,0.35);
+      padding: 7px 18px; border-radius: 20px; font-size: 13px; font-weight: 700; color: var(--text-primary);
+      display: flex; align-items: center; gap: 7px;
+    }
+    .t-pill.gold { background: rgba(255,215,0,0.1); border-color: rgba(255,215,0,0.3); color: var(--accent2); }
+    .btn-unlock-all {
+      background: linear-gradient(135deg, var(--primary), #FF3B53);
+      color: white; border: none; padding: 16px 48px; border-radius: 30px;
+      font-family: 'Cairo', sans-serif; font-size: 18px; font-weight: 900; cursor: pointer;
+      transition: all 0.3s; display: inline-flex; align-items: center; gap: 12px;
+      box-shadow: 0 6px 30px rgba(192,21,42,0.65); animation: glow 2.5s infinite;
+    }
+    @keyframes glow {
+      0%,100%{box-shadow:0 6px 30px rgba(192,21,42,0.65);}
+      50%{box-shadow:0 8px 50px rgba(192,21,42,1), 0 0 90px rgba(192,21,42,0.35);}
+    }
+    .btn-unlock-all:hover { transform: translateY(-3px) scale(1.03); }
+
+    /* ===== CONVERSATIONS ===== */
+    .conversations-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .conv-card {
+      background: var(--bg-card); border-radius: 16px; overflow: hidden;
+      border: 1px solid rgba(192,21,42,0.2);
+    }
+    .conv-header {
+      background: linear-gradient(135deg, #1A0005, #0A0A0F);
+      padding: 14px 18px; display: flex; align-items: center; gap: 12px;
+    }
+    .conv-icon { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+    .conv-title { flex: 1; }
+    .conv-title h4 { font-size: 14px; font-weight: 700; }
+    .conv-title span { font-size: 11px; color: var(--text-secondary); }
+    .live-badge {
+      background: #c0392b; color: white; padding: 3px 10px; border-radius: 8px;
+      font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; gap: 5px; flex-shrink: 0;
+    }
+    .live-dot { width: 6px; height: 6px; background: white; border-radius: 50%; animation: blink 1s infinite; }
+    @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.15;} }
+    .conv-messages { padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+    .msg { display: flex; align-items: flex-start; gap: 9px; }
+    .msg.me { flex-direction: row-reverse; }
+    .msg-av { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+    .bubble { padding: 10px 14px; border-radius: 16px; max-width: 76%; font-size: 13px; line-height: 1.65; }
+    .msg:not(.me) .bubble { background: rgba(192,21,42,0.18); border-radius: 2px 16px 16px 16px; }
+    .msg.me .bubble { background: linear-gradient(135deg, var(--primary), var(--primary-light)); border-radius: 16px 2px 16px 16px; }
+    .conv-lock-wrap { padding: 0 15px 15px; background: linear-gradient(transparent, var(--bg-card) 60%); margin-top: -22px; }
+    .conv-lock-box {
+      background: rgba(10,10,15,0.97); border: 1px solid rgba(192,21,42,0.3);
+      border-radius: 12px; padding: 18px; text-align: center;
+    }
+    .conv-lock-box i { font-size: 26px; color: var(--accent2); display: block; margin-bottom: 7px; }
+    .conv-lock-box p { color: var(--text-secondary); font-size: 12px; margin-bottom: 12px; line-height: 1.55; }
+    .btn-fb-sm {
+      background: var(--facebook); color: white; border: none;
+      padding: 9px 20px; border-radius: 18px;
+      font-family: 'Cairo', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 7px; transition: all 0.3s;
+    }
+    .btn-fb-sm:hover { background: #1565C0; transform: translateY(-2px); }
+
+    /* ===== FEATURED PROFILE ===== */
+    .featured-wrap { max-width: 1200px; margin: 0 auto; padding: 0 20px 40px; }
+    .featured-section {
+      background: linear-gradient(135deg, rgba(192,21,42,0.07), rgba(10,10,15,0.96));
+      border: 1px solid rgba(192,21,42,0.38); border-radius: 22px; overflow: hidden;
+    }
+    .featured-inner { display: grid; grid-template-columns: 290px 1fr; }
+    .featured-photo-side {
+      position: relative; min-height: 430px;
+      background: linear-gradient(160deg, #2A0008, #C0152A, #FF3B53);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .feat-av-lg {
+      width: 130px; height: 130px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 58px; border: 5px solid rgba(255,255,255,0.85);
+      box-shadow: 0 0 40px rgba(255,107,157,0.6); position: relative; z-index: 1;
+    }
+    .feat-photo-blur {
+      position: absolute; inset: 0;
+      backdrop-filter: blur(22px) saturate(0.2); background: rgba(10,10,15,0.45);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; cursor: pointer;
+    }
+    .gold-lock {
+      font-size: 46px; color: var(--accent2);
+      filter: drop-shadow(0 0 18px rgba(255,215,0,0.8));
+      animation: swing 3s ease-in-out infinite;
+    }
+    @keyframes swing { 0%,100%{transform:rotate(-8deg);} 50%{transform:rotate(8deg);} }
+    .feat-photo-blur p { color: white; font-size: 14px; font-weight: 700; text-align: center; line-height: 1.6; }
+    .featured-info { padding: 36px 36px 36px 28px; }
+    .feat-badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: linear-gradient(135deg, var(--primary), var(--purple));
+      color: white; padding: 6px 16px; border-radius: 18px; font-size: 12px; font-weight: 700; margin-bottom: 14px;
+    }
+    .feat-name { font-size: 36px; font-weight: 900; line-height: 1.2; margin-bottom: 10px; }
+    .feat-name span { color: var(--primary-light); }
+    .feat-desc { color: var(--text-secondary); font-size: 14px; line-height: 1.9; margin-bottom: 18px; }
+    .feat-tags { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 22px; }
+    .tag {
+      background: rgba(192,21,42,0.15); border: 1px solid rgba(192,21,42,0.3);
+      color: var(--text-primary); padding: 5px 13px; border-radius: 20px; font-size: 12px; font-weight: 600;
+    }
+    .feat-locked {
+      background: rgba(10,10,15,0.8); border: 1px dashed rgba(255,59,83,0.4);
+      border-radius: 14px; padding: 22px; text-align: center;
+    }
+    .feat-locked i { font-size: 26px; color: var(--accent2); display: block; margin-bottom: 8px; }
+    .feat-locked p { color: var(--text-secondary); font-size: 13px; margin-bottom: 16px; line-height: 1.65; }
+    .counter-live {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(46,204,113,0.12); border: 1px solid rgba(46,204,113,0.3);
+      color: #2ECC71; padding: 5px 14px; border-radius: 12px; font-size: 12px; font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    /* ===== EXCLUSIVE GRID ===== */
+    .exclusive-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .exc-card {
+      background: var(--bg-card); border-radius: 16px; overflow: hidden;
+      border: 1px solid rgba(124,29,203,0.25); cursor: pointer; transition: all 0.3s;
+    }
+    .exc-card:hover { transform: translateY(-5px); border-color: var(--purple); box-shadow: 0 12px 35px rgba(124,29,203,0.3); }
+    .exc-thumb { height: 150px; position: relative; display: flex; align-items: center; justify-content: center; font-size: 65px; }
+    .exc-blur {
+      position: absolute; inset: 0;
+      backdrop-filter: blur(25px) saturate(0.2); background: rgba(10,10,15,0.55);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px;
+    }
+    .exc-blur i { font-size: 24px; color: var(--purple); filter: drop-shadow(0 0 10px rgba(124,29,203,0.8)); }
+    .exc-blur span { font-size: 12px; color: white; font-weight: 700; text-align: center; padding: 0 10px; }
+    .exc-badge {
+      position: absolute; top: 10px; right: 10px;
+      background: linear-gradient(135deg, var(--purple), #5500AA);
+      color: white; padding: 3px 10px; border-radius: 8px; font-size: 10px; font-weight: 900; z-index: 5;
+    }
+    .exc-info { padding: 12px 14px; }
+    .exc-info h4 { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+    .exc-info span { font-size: 11px; color: var(--text-secondary); }
+    .exc-footer {
+      padding: 8px 14px; border-top: 1px solid rgba(124,29,203,0.12);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .exc-price { font-size: 12px; font-weight: 700; color: var(--accent2); display: flex; align-items: center; gap: 5px; }
+    .exc-views { font-size: 11px; color: var(--text-secondary); display: flex; align-items: center; gap: 5px; }
+
+    /* ===== PROFILES ROW ===== */
+    .profiles-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; }
+    .profile-mini {
+      background: var(--bg-card); border-radius: 14px; padding: 18px 12px; text-align: center;
+      border: 1px solid rgba(192,21,42,0.15); transition: all 0.3s; cursor: pointer; position: relative;
+    }
+    .profile-mini:hover { transform: translateY(-6px); border-color: var(--primary-light); box-shadow: 0 12px 30px rgba(192,21,42,0.3); }
+    .mini-av-wrap { position: relative; width: 64px; height: 64px; margin: 0 auto 10px; }
+    .mini-av { width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; }
+    .mini-av-wrap::before {
+      content: ''; position: absolute; inset: -3px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-light), var(--purple), var(--accent2)); z-index: -1;
+    }
+    .mini-lock-badge {
+      position: absolute; top: 0; left: 0; background: rgba(10,10,15,0.92);
+      width: 22px; height: 22px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; font-size: 9px; color: var(--accent2);
+    }
+    .mini-name { font-size: 13px; font-weight: 700; margin-bottom: 3px; }
+    .mini-status { font-size: 11px; color: var(--text-secondary); }
+
+    /* ===== LOGIN MODAL ===== */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000;
+      display: none; align-items: center; justify-content: center;
+      backdrop-filter: blur(8px); padding: 20px;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-box {
+      background: var(--bg-card2); border-radius: 22px; width: 100%; max-width: 440px;
+      border: 1px solid rgba(192,21,42,0.5);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.85), 0 0 60px rgba(192,21,42,0.15);
+      overflow: hidden; animation: modalPop 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    @keyframes modalPop { from{opacity:0;transform:scale(0.85) translateY(30px);} to{opacity:1;transform:scale(1) translateY(0);} }
+    .modal-head {
+      background: linear-gradient(135deg, #1A0005, #2A000D);
+      padding: 28px 30px; text-align: center; position: relative;
+      border-bottom: 1px solid rgba(192,21,42,0.3);
+    }
+    .modal-logo {
+      width: 74px; height: 74px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 34px; margin: 0 auto 14px; box-shadow: 0 0 30px rgba(192,21,42,0.5);
+    }
+    .modal-head h2 { font-size: 21px; font-weight: 900; }
+    .modal-head p { color: var(--text-secondary); font-size: 13px; margin-top: 7px; line-height: 1.65; }
+    .modal-perks { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 12px; }
+    .m-perk {
+      background: rgba(192,21,42,0.15); border: 1px solid rgba(192,21,42,0.3);
+      color: var(--primary-light); padding: 4px 12px; border-radius: 10px; font-size: 11px; font-weight: 700;
+    }
+    .modal-close {
+      position: absolute; top: 14px; left: 14px;
+      background: rgba(255,255,255,0.1); border: none; color: white;
+      width: 32px; height: 32px; border-radius: 50%; cursor: pointer;
+      font-size: 16px; display: flex; align-items: center; justify-content: center; transition: background 0.2s;
+    }
+    .modal-close:hover { background: rgba(255,255,255,0.2); }
+    .modal-body { padding: 26px 30px; }
+    .btn-fb-big {
+      width: 100%; background: var(--facebook); color: white; border: none;
+      padding: 15px; border-radius: 12px;
+      font-family: 'Cairo', sans-serif; font-size: 17px; font-weight: 700; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+      transition: all 0.3s; margin-bottom: 18px; box-shadow: 0 5px 22px rgba(24,119,242,0.45);
+    }
+    .btn-fb-big:hover { background: #1565C0; box-shadow: 0 8px 28px rgba(24,119,242,0.65); transform: translateY(-2px); }
+    .divider { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .divider::before,.divider::after { content:''; flex:1; height:1px; background:rgba(192,21,42,0.25); }
+    .divider span { color: var(--text-secondary); font-size: 12px; white-space: nowrap; }
+    .form-group { margin-bottom: 13px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; }
+    .form-group input {
+      width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(192,21,42,0.28);
+      color: white; padding: 12px 14px; border-radius: 10px;
+      font-family: 'Cairo', sans-serif; font-size: 14px; transition: border-color 0.3s; direction: rtl;
+    }
+    .form-group input:focus { outline: none; border-color: var(--primary-light); }
+    .form-group input::placeholder { color: rgba(160,160,192,0.45); }
+    .btn-signin {
+      width: 100%; background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: white; border: none; padding: 13px; border-radius: 12px;
+      font-family: 'Cairo', sans-serif; font-size: 16px; font-weight: 700; cursor: pointer;
+      transition: all 0.3s; margin-bottom: 14px;
+    }
+    .btn-signin:hover { box-shadow: 0 5px 22px rgba(192,21,42,0.55); transform: translateY(-2px); }
+    .modal-foot-txt { text-align: center; color: var(--text-secondary); font-size: 12px; }
+    .modal-foot-txt a { color: var(--primary-light); text-decoration: none; font-weight: 700; cursor: pointer; }
+    .modal-foot-txt a:hover { text-decoration: underline; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: linear-gradient(180deg, var(--bg-card) 0%, #04040A 100%);
+      border-top: 1px solid rgba(192,21,42,0.28); padding: 45px 20px 22px; margin-top: 45px;
+    }
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 28px; }
+    .footer-brand h3 { font-size: 20px; font-weight: 900; margin-bottom: 12px; }
+    .footer-brand p { color: var(--text-secondary); font-size: 13px; line-height: 1.75; margin-bottom: 18px; }
+    .footer-social { display: flex; gap: 12px; }
+    .social-btn { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; transition: all 0.3s; border: none; }
+    .social-btn.fb { background: var(--facebook); color: white; }
+    .social-btn.fb:hover { transform: translateY(-3px); box-shadow: 0 5px 18px rgba(24,119,242,0.55); }
+    .footer-col h4 { font-size: 15px; font-weight: 700; margin-bottom: 14px; color: var(--primary-light); }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 9px; }
+    .footer-col ul li a { color: var(--text-secondary); text-decoration: none; font-size: 13px; cursor: pointer; transition: color 0.2s; }
+    .footer-col ul li a:hover { color: var(--text-primary); }
+    .footer-bottom {
+      border-top: 1px solid rgba(192,21,42,0.18); padding-top: 20px;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
+    }
+    .footer-bottom p { color: var(--text-secondary); font-size: 12px; }
+
+    /* ===== TOAST ===== */
+    .toast {
+      position: fixed; bottom: 30px; left: 50%;
+      transform: translateX(-50%) translateY(120px);
+      background: var(--bg-card); border: 1px solid var(--primary-light);
+      color: white; padding: 13px 26px; border-radius: 28px;
+      font-size: 14px; font-weight: 600; z-index: 3000;
+      transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+      display: flex; align-items: center; gap: 10px;
+      box-shadow: 0 10px 35px rgba(0,0,0,0.6); white-space: nowrap;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 960px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-text h2 { font-size: 32px; }
+      .hero-cards { grid-template-columns: 1fr 1fr; }
+      .hcard:first-child { grid-column: span 2; }
+      .posts-grid { grid-template-columns: 1fr 1fr; }
+      .conversations-grid { grid-template-columns: 1fr; }
+      .featured-inner { grid-template-columns: 1fr; }
+      .featured-photo-side { min-height: 240px; }
+      .profiles-row { grid-template-columns: repeat(3, 1fr); }
+      .exclusive-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .stats-inner { grid-template-columns: repeat(3, 1fr); }
+      .vip-box { flex-direction: column; text-align: center; }
+    }
+    @media (max-width: 600px) {
+      .posts-grid { grid-template-columns: 1fr; }
+      .profiles-row { grid-template-columns: repeat(2, 1fr); }
+      .exclusive-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .logo-text h1 { font-size: 17px; }
+      .btn-login-fb { padding: 9px 14px; font-size: 13px; }
+      .feat-name { font-size: 26px; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      .stats-inner { grid-template-columns: repeat(2, 1fr); }
+      .online-count { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== AGE GATE ===== -->
+<div class="age-gate" id="ageGate">
+  <div class="age-gate-box">
+    <span class="age-icon">🔞</span>
+    <h2>تأكيد السن</h2>
+    <p>
+      هذا الموقع يحتوي على محتوى خاص وحصري للكبار فقط.<br>
+      <strong>هل عندك ١٨ سنة أو أكتر؟</strong>
+    </p>
+    <div class="age-btns">
+      <button class="btn-yes" onclick="confirmAge()">أيوه، عندي ١٨+</button>
+      <button class="btn-no" onclick="denyAge()">لأ</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TOAST ===== -->
+<div class="toast" id="toast">
+  <i class="fa-solid fa-circle-check" style="color:var(--primary-light)"></i>
+  <span id="toastMsg">تم!</span>
+</div>
+
+<!-- ===== LOGIN MODAL ===== -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <button class="modal-close" onclick="closeModal()" aria-label="إغلاق">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div class="modal-logo">🔥</div>
+      <h2>اسمك مش هيبان لحد 🔥</h2>
+      <p>ادخل بفيسبوك وشوف كل أسرارهم ومحادثاتهم الخاصة — عندنا كل حاجة مخفيوها! 🔓</p>
+      <div class="modal-perks">
+        <span class="m-perk">🤫 كل أسرارهم هنا</span>
+        <span class="m-perk">💬 كل محادثاتهم الخاصة</span>
+        <span class="m-perk">📸 صور ما اتنشرتش</span>
+        <span class="m-perk">🔥 اشتركوا معانا</span>
+      </div>
+    </div>
+    <div class="modal-body">
+      <button class="btn-fb-big" onclick="handleFbLogin()">
+        <i class="fa-brands fa-facebook-f" style="font-size:20px"></i>
+        ادخل بفيسبوك وشوف رسائلهم وأسرارهم 🤫
+      </button>
+      <p style="text-align:center;font-size:12px;color:#2ECC71;margin:8px 0 0;display:flex;align-items:center;justify-content:center;gap:6px;">
+        <i class="fa-solid fa-shield-halved"></i>
+        اسمك مش هيبان لحد — دخولك سري 100%
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== HEADER ===== -->
+<header>
+  <div class="header-inner">
+    <a class="logo" href="#" aria-label="بنات السراقنا">
+      <div class="logo-icon">🔥</div>
+      <div class="logo-text">
+        <h1>بنات السراقنا</h1>
+        <span>🔞 محتوى خاص وحصري • للكبار فقط ١٨+</span>
+      </div>
+    </a>
+    <div class="header-actions">
+      <div class="online-count">
+        <div class="green-dot"></div>
+        <span id="onlineNum">١,٢٤٧</span> أونلاين دلوقتي
+      </div>
+      <button class="notif-btn" onclick="openModal()" aria-label="إشعارات">
+        <i class="fa-solid fa-bell"></i>
+        <div class="notif-dot"></div>
+      </button>
+      <button class="btn-login-fb" onclick="openModal()">
+        <i class="fa-brands fa-facebook-f"></i>
+        دخول — اسمك مش هيبان
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ===== TICKER ===== -->
+<div class="ticker-wrap" aria-hidden="true">
+  <div class="ticker-track">
+    <span class="ticker-item">🤫 عندنا كل أسرارهم — ادخل بفيسبوك وشوفها دلوقتي!</span>
+    <span class="ticker-item">💬 عندنا كل محادثاتهم الخاصة — مسربة ومحفوظة هنا</span>
+    <span class="ticker-item">🔥 مارينا السرقناوية — أسرارها كلها هنا مش في أي مكان تاني!</span>
+    <span class="ticker-item">📸 صور ما اتنشرتش ومش هتلاقيها غير هنا — ادخل وشوف</span>
+    <span class="ticker-item">💣 اشتركوا معانا وشاركوا أسرارهم مع صحابكم!</span>
+    <span class="ticker-item">🔒 كل حاجة مخفيوها — موجودة عندنا وبتنتظرك دلوقتي</span>
+    <span class="ticker-item">🤫 عندنا كل أسرارهم — ادخل بفيسبوك وشوفها دلوقتي!</span>
+    <span class="ticker-item">💬 عندنا كل محادثاتهم الخاصة — مسربة ومحفوظة هنا</span>
+    <span class="ticker-item">🔥 مارينا السرقناوية — أسرارها كلها هنا مش في أي مكان تاني!</span>
+    <span class="ticker-item">📸 صور ما اتنشرتش ومش هتلاقيها غير هنا — ادخل وشوف</span>
+    <span class="ticker-item">💣 اشتركوا معانا وشاركوا أسرارهم مع صحابكم!</span>
+    <span class="ticker-item">🔒 كل حاجة مخفيوها — موجودة عندنا وبتنتظرك دلوقتي</span>
+  </div>
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="badge-pill">
+        <i class="fa-solid fa-fire"></i> الموقع الأول في السراقنا
+      </div>
+      <h2>
+        عندنا <span class="name">كل اسرارهم الاوساخ</span> 🤫<br>
+        ومحادثاتهم الخاصة،<br>
+        <span class="hot">🔥 شراميط البلد</span>
+      </h2>
+      <p>
+        عندنا كل أسرارهم ومحادثاتهم الخاصة اللي مش عارفين إنها اتنشرت!
+        ادخل بفيسبوك دلوقتي وشوف كل حاجة مخفيوها — وشاركها مع صحابك!
+        مش هتلاقي الكلام ده في أي مكان تاني غيرنا.
+      </p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="openModal()">
+          <i class="fa-brands fa-facebook-f"></i> ادخل بفيسبوك وشوف أسرارهم
+        </button>
+        <button class="btn-outline" onclick="showToast('عندنا كل أسرارهم ومحادثاتهم — ادخل وشوف! 🔥')">
+          إيه اللي عندنا؟
+        </button>
+      </div>
+    </div>
+
+    <div class="hero-cards">
+      <div class="hcard" onclick="openModal()">
+        <div class="hcard-bg" style="background:linear-gradient(135deg,#5A0008,#C0152A,#FF3B53);">
+          <span style="filter:blur(12px);font-size:90px">👸</span>
+        </div>
+        <div class="hcard-blur">
+          <i class="lock-i fa-solid fa-lock"></i>
+          <span class="hint">🤫 عندنا كل أسرار مارينا<br>ادخل بفيسبوك وشوف كل حاجة</span>
+        </div>
+        <div class="hcard-label">
+          <h4>مارينا السرقناوية 👸</h4>
+          <span>🟢 أونلاين الآن • ٤,٢٠٠ متابع</span>
+        </div>
+      </div>
+      <div class="hcard" onclick="openModal()">
+        <div class="hcard-bg" style="background:linear-gradient(135deg,#0A2A5A,#1877F2);">
+          <span style="filter:blur(10px);font-size:55px">💬</span>
+        </div>
+        <div class="hcard-blur">
+          <i class="lock-i fa-solid fa-lock"></i>
+          <span class="hint">💬 عندنا كل محادثاتهم الخاصة<br>مسربة ومحفوظة هنا 🔒</span>
+        </div>
+        <div class="hcard-label">
+          <h4>محادثات حصرية 💬</h4>
+          <span>٣,٨٠٠+ محادثة محمية</span>
+        </div>
+      </div>
+      <div class="hcard" onclick="openModal()">
+        <div class="hcard-bg" style="background:linear-gradient(135deg,#2A0A3A,#7C1DCB);">
+          <span style="filter:blur(10px);font-size:55px">🎬</span>
+        </div>
+        <div class="hcard-blur">
+          <i class="lock-i fa-solid fa-lock"></i>
+          <span class="hint">🎬 فيديوهاتهم السرية هنا<br>ادخل بفيسبوك وشاركها 👑</span>
+        </div>
+        <div class="hcard-label">
+          <h4>فيديوهات VIP 🎬</h4>
+          <span>٥٠٠+ فيديو خاص</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== STATS ===== -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <span class="stat-number">١٢,٤٠٠+</span>
+      <span class="stat-label">عضو مسجل</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">٣,٨٠٠+</span>
+      <span class="stat-label">محادثة سرية</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">٧,٢٠٠+</span>
+      <span class="stat-label">صورة خاصة</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number" id="statOnline">١,٢٤٧</span>
+      <span class="stat-label">أونلاين دلوقتي</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">٩٩٪</span>
+      <span class="stat-label">شخص شاف المحتوى</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== VIP BANNER ===== -->
+<div class="vip-banner">
+  <div class="vip-box">
+    <div class="vip-left">
+      <div class="vip-icon">�</div>
+      <div class="vip-text">
+        <h3>عندنا كل رسائلهم وأسرارهم — ادخل فيسبوك وشوف! 🤫</h3>
+        <p>رسائل مارينا وكريستين وريتا وكل البنات — مش عارفين إنها عندنا! ادخل بفيسبوك وشوف وشارك مع صحابك.</p>
+        <div class="vip-perks">
+          <span class="perk">💬 رسائلهم الخاصة</span>
+          <span class="perk">🤫 أسرارهم</span>
+          <span class="perk">📸 صورهم</span>
+          <span class="perk">🔓 ادخل بفيسبوك</span>
+        </div>
+      </div>
+    </div>
+    <button class="btn-vip" onclick="openModal()">
+      👄 ادخل فيسبوك وشوف
+    </button>
+  </div>
+</div>
+
+<!-- ===== POSTS ===== -->
+<div class="section">
+  <div class="section-header">
+    <h2 class="section-title">رسائلهم وصورهم الخاصة 💬</h2>
+    <a class="see-all" onclick="openModal()">شوف الكل <i class="fa-solid fa-chevron-left"></i></a>
+  </div>
+  <div class="posts-grid">
+
+    <article class="post-card" onclick="openModal()" role="button" tabindex="0">
+      <div class="post-image">
+        <div class="post-image-bg" style="background:linear-gradient(135deg,#5A0008,#C0152A,#FF6B9D);">
+          <span style="filter:blur(13px)">👸</span>
+        </div>
+        <span class="hot-tag-img">🔥 ساخن</span>
+        <div class="post-blur-overlay">
+          <i class="fa-solid fa-lock"></i>
+          <span class="blur-hint">صورة خاصة لمارينا<br>سجل دخولك لتشوفها كاملة</span>
+        </div>
+      </div>
+      <div class="post-content">
+        <div class="post-user">
+          <div class="post-avatar" style="background:linear-gradient(135deg,#C0152A,#FF6B9D)">👸</div>
+          <div>
+            <div class="post-username">مارينا السرقناوية</div>
+            <div class="post-time">من ٢٠ دقيقة</div>
+          </div>
+        </div>
+        <p class="post-text">يا جماعة مش قادرة أصدق الكلام ده! النهارده كان يوم من أجمل أيامي — طلعت مع صحابي وعملنا صور مش هتتخيلوا...</p>
+      </div>
+      <div class="post-footer">
+        <div class="post-stats">
+          <span class="post-stat"><i class="fa-solid fa-heart" style="color:#e53935"></i> ٥٦٧</span>
+          <span class="post-stat"><i class="fa-regular fa-comment"></i> ١٤٤</span>
+        </div>
+        <span class="locked-tag"><i class="fa-solid fa-lock"></i> محمي</span>
+      </div>
+    </article>
+
+    <article class="post-card" onclick="openModal()" role="button" tabindex="0">
+      <div class="post-image">
+        <div class="post-image-bg" style="background:linear-gradient(135deg,#1A3A6B,#4A90D9);">
+          <span style="filter:blur(13px)">🌊</span>
+        </div>
+        <span class="hot-tag-img">🆕 جديد</span>
+        <div class="post-blur-overlay">
+          <i class="fa-solid fa-lock"></i>
+          <span class="blur-hint">💬 رسائل كريستين الخاصة<br>ادخل فيسبوك وشوفها 🔒</span>
+        </div>
+      </div>
+      <div class="post-content">
+        <div class="post-user">
+          <div class="post-avatar" style="background:linear-gradient(135deg,#1A8B3A,#6BCF7A)">🌸</div>
+          <div>
+            <div class="post-username">كريستين السراقناوية</div>
+            <div class="post-time">من ساعة</div>
+          </div>
+        </div>
+        <p class="post-text">كريستين عندها رسائل مش هتصدقوا مع مارينا — ادخل فيسبوك وشوف الكلام ده بالتفصيل...</p>
+      </div>
+      <div class="post-footer">
+        <div class="post-stats">
+          <span class="post-stat"><i class="fa-solid fa-heart" style="color:#e53935"></i> ٣٢٥</span>
+          <span class="post-stat"><i class="fa-regular fa-comment"></i> ٨٧</span>
+        </div>
+        <span class="locked-tag"><i class="fa-solid fa-lock"></i> محمي</span>
+      </div>
+    </article>
+
+    <article class="post-card" onclick="openModal()" role="button" tabindex="0">
+      <div class="post-image">
+        <div class="post-image-bg" style="background:linear-gradient(135deg,#4A0A6A,#8B2ABB);">
+          <span style="filter:blur(13px)">🌙</span>
+        </div>
+        <span class="hot-tag-img" style="background:var(--purple)">� جديد</span>
+        <div class="post-blur-overlay">
+          <i class="fa-solid fa-lock"></i>
+          <span class="blur-hint">ادخل فيسبوك وشوف رسائلها<br>مش هيعرفوا إنك شوفت 🔒</span>
+        </div>
+      </div>
+      <div class="post-content">
+        <div class="post-user">
+          <div class="post-avatar" style="background:linear-gradient(135deg,#8B5A1A,#D4A055)">💃</div>
+          <div>
+            <div class="post-username">فيفيان الليلة</div>
+            <div class="post-time">من ٣ ساعات</div>
+          </div>
+        </div>
+        <p class="post-text">الليلة كان الحفل أجمل حاجة شفتها في حياتي! مارينا كانت هناك ومش هتصدقوا اللي حصل بعد...</p>
+      </div>
+      <div class="post-footer">
+        <div class="post-stats">
+          <span class="post-stat"><i class="fa-solid fa-heart" style="color:#e53935"></i> ٤٩٨</span>
+          <span class="post-stat"><i class="fa-regular fa-comment"></i> ١٣٢</span>
+        </div>
+        <span class="locked-tag"><i class="fa-solid fa-lock"></i> محمي</span>
+      </div>
+    </article>
+
+    <article class="post-card" onclick="openModal()" role="button" tabindex="0">
+      <div class="post-image">
+        <div class="post-image-bg" style="background:linear-gradient(135deg,#6B1A1A,#D94A4A);">
+          <span style="filter:blur(13px)">🌹</span>
+        </div>
+        <div class="post-blur-overlay">
+          <i class="fa-solid fa-lock"></i>
+          <span class="blur-hint">صورة خاصة محمية بالكامل 🔒</span>
+        </div>
+      </div>
+      <div class="post-content">
+        <div class="post-user">
+          <div class="post-avatar" style="background:linear-gradient(135deg,#C0152A,#FF3B53)">🎀</div>
+          <div>
+            <div class="post-username">ريتا الحلوة</div>
+            <div class="post-time">أمس الساعة ١١ م</div>
+          </div>
+        </div>
+        <p class="post-text">قلتلها يا مارينا انتي مش عارفة قيمة نفسك! البنت دي لو عرفت إنك بتكلمي كل ده هتموت...</p>
+      </div>
+      <div class="post-footer">
+        <div class="post-stats">
+          <span class="post-stat"><i class="fa-solid fa-heart" style="color:#e53935"></i> ٢٨٩</span>
+          <span class="post-stat"><i class="fa-regular fa-comment"></i> ٧٦</span>
+        </div>
+        <span class="locked-tag"><i class="fa-solid fa-lock"></i> محمي</span>
+      </div>
+    </article>
+
+    <article class="post-card" onclick="openModal()" role="button" tabindex="0">
+      <div class="post-image">
+        <div class="post-image-bg" style="background:linear-gradient(135deg,#1A4A2A,#2ECC71);">
+          <span style="filter:blur(13px)">✨</span>
+        </div>
+        <div class="post-blur-overlay">
+          <i class="fa-solid fa-lock"></i>
+          <span class="blur-hint">ماسنجر خاص جداً 🔒</span>
+        </div>
+      </div>
+      <div class="post-content">
+        <div class="post-user">
+          <div class="post-avatar" style="background:linear-gradient(135deg,#1A8B8B,#55D4D4)">🌟</div>
+          <div>
+            <div class="post-username"> شرموطة السراقنا</div>
+            <div class="post-time">أمس</div>
+          </div>
+        </div>
+        <p class="post-text">بنات عندي خبر مش قادرة تصدقوه! بت الوسخ...... السرقناوية نزلت ألبوم صور جديد وهتموتوا من...</p>
+      </div>
+      <div class="post-footer">
+        <div class="post-stats">
+          <span class="post-stat"><i class="fa-solid fa-heart" style="color:#e53935"></i> ٧١٢</span>
+          <span class="post-stat"><i class="fa-regular fa-comment"></i> ٢٠٤</span>
+        </div>
+        <span class="locked-tag"><i class="fa-solid fa-lock"></i> محمي</span>
+      </div>
+    </article>
+
+    <article class="post-card" onclick="openModal()" role="button" tabindex="0">
+      <div class="post-image">
+        <div class="post-image-bg" style="background:linear-gradient(135deg,#1A1A6B,#5555D4);">
+          <span style="filter:blur(13px)">🌃</span>
+        </div>
+        <div class="post-blur-overlay">
+          <i class="fa-solid fa-lock"></i>
+          <span class="blur-hint">صورة ليلية خاصة محمية 🔒</span>
+        </div>
+      </div>
+      <div class="post-content">
+        <div class="post-user">
+          <div class="post-avatar" style="background:linear-gradient(135deg,#9A55CF,#4A1A8B)">🌙</div>
+          <div>
+            <div class="post-username"غرب البلد وبنات المصفى</div>
+            <div class="post-time">من يومين</div>
+          </div>
+        </div>
+        <p class="post-text">مساء السراقنا يا جماعة! اليوم مع مارينا كنا في مكان مش هتصدقوه وحصل كلام لن تصدق!</p>
+      </div>
+      <div class="post-footer">
+        <div class="post-stats">
+          <span class="post-stat"><i class="fa-solid fa-heart" style="color:#e53935"></i> ٣٨٩</span>
+          <span class="post-stat"><i class="fa-regular fa-comment"></i> ٩٩</span>
+        </div>
+        <span class="locked-tag"><i class="fa-solid fa-lock"></i> محمي</span>
+      </div>
+    </article>
+
+  </div>
+</div>
+
+<!-- ===== TEASER STRIP ===== -->
+<div class="teaser-strip">
+  <div class="teaser-inner">
+    <h3>🤫 عندنا كل أسرارهم — <span>كل محادثاتهم الخاصة هنا!</span></h3>
+    <p>ادخل بفيسبوك وشوف كل حاجة مخفيوها — وشارك أسرارهم مع صحابك فوراً! التسجيل مجاني 🔥</p>
+    <div class="teaser-pills">
+      <div class="t-pill">🤫 كل أسرارهم مكشوفة هنا</div>
+      <div class="t-pill">💬 كل محادثاتهم الخاصة</div>
+      <div class="t-pill">📸 صور ما اتنشرتش قبل كده</div>
+      <div class="t-pill gold">💥 اشتركوا وشاركوا مع صحابكم!</div>
+      <div class="t-pill">🎙️ رسائلهم الصوتية الخاصة</div>
+      <div class="t-pill gold">🔓 ادخل بفيسبوك وشوف الكل</div>
+      <div class="t-pill">🔥 أسرار بنات السراقنا كلها</div>
+      <div class="t-pill">❤️‍🔥 مش هيعرفوا إنك شوفت!</div>
+    </div>
+    <button class="btn-unlock-all" onclick="openModal()">
+      <i class="fa-solid fa-lock-open"></i>
+      افتح كل المحتوى الآن — مجاني 🔥
+    </button>
+  </div>
+</div>
+
+<!-- ===== CONVERSATIONS ===== -->
+<div class="section">
+  <div class="section-header">
+    <h2 class="section-title">محادثاتهم الخاصة 💬</h2>
+    <a class="see-all" onclick="openModal()">شوف الكل <i class="fa-solid fa-chevron-left"></i></a>
+  </div>
+  <div class="conversations-grid">
+
+    <div class="conv-card">
+      <div class="conv-header">
+        <div class="conv-icon" style="background:linear-gradient(135deg,#FF6B9D,#C0152A)">💬</div>
+        <div class="conv-title">
+          <h4>مارينا بتكشف أسرارها...</h4>
+          <span>محادثة خاصة جداً</span>
+        </div>
+        <div class="live-badge"><div class="live-dot"></div> لايف</div>
+      </div>
+      <div class="conv-messages">
+        <div class="msg">
+          <div class="msg-av" style="background:linear-gradient(135deg,#FF6B9D,#C0152A)">👸</div>
+          <div class="bubble">مريم يا بنتي مش قادرة أصدق اللي حصل النهارده معايا!</div>
+        </div>
+        <div class="msg me">
+          <div class="msg-av" style="background:linear-gradient(135deg,#4A90D9,#1A3A6B)">👤</div>
+          <div class="bubble">قوليلي يا مارينا!! أنا متوترت!</div>
+        </div>
+        <div class="msg">
+          <div class="msg-av" style="background:linear-gradient(135deg,#FF6B9D,#C0152A)">👸</div>
+          <div class="bubble">هو كان هناك وقالي كلام مش... 🤫🔥</div>
+        </div>
+      </div>
+      <div class="conv-lock-wrap">
+        <div class="conv-lock-box">
+          <i class="fa-solid fa-lock"></i>
+          <p>عندنا <strong style="color:var(--primary-light)">٨٩ رسالة تانية</strong> من أسرارها — ادخل بفيسبوك وشوفها وشاركها! 🤫</p>
+          <button class="btn-fb-sm" onclick="openModal()">
+            <i class="fa-brands fa-facebook-f"></i> ادخل بفيسبوك وشوف أسرارها
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="conv-card">
+      <div class="conv-header">
+        <div class="conv-icon" style="background:linear-gradient(135deg,#FFD700,#FF4500)">💥</div>
+        <div class="conv-title">
+          <h4>الجلسة الساخنة مع مارينا 🔥</h4>
+          <span>مجموعة حصرية — ٤٧ أونلاين</span>
+        </div>
+        <div class="live-badge"><div class="live-dot"></div> لايف</div>
+      </div>
+      <div class="conv-messages">
+        <div class="msg">
+          <div class="msg-av" style="background:linear-gradient(135deg,#6BCF7A,#1A8B3A)">🌸</div>
+          <div class="bubble">جماعة! مارينا عملت حاجة مش طبيعي النهارده! 😱</div>
+        </div>
+        <div class="msg me">
+          <div class="msg-av" style="background:linear-gradient(135deg,#D4A055,#8B5A1A)">💃</div>
+          <div class="bubble">إيه إيه؟! قول بالتفصيل يا واد! — سيلفيا</div>
+        </div>
+        <div class="msg">
+          <div class="msg-av" style="background:linear-gradient(135deg,#FF6B9D,#C0152A)">👸</div>
+          <div class="bubble">ههههه أنا موجودة بقى 😂 بتقولوا إيه فيا؟!</div>
+        </div>
+      </div>
+      <div class="conv-lock-wrap">
+        <div class="conv-lock-box">
+          <i class="fa-solid fa-lock"></i>
+          <p>عندنا <strong style="color:var(--primary-light)">١٢٣ رسالة</strong> من محادثاتهم الخاصة — عارفين إنها اتسربت؟! 🤫</p>
+          <button class="btn-fb-sm" onclick="openModal()">
+            <i class="fa-brands fa-facebook-f"></i> ادخل بفيسبوك وشوف وشارك!
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="conv-card">
+      <div class="conv-header">
+        <div class="conv-icon" style="background:linear-gradient(135deg,#9A55CF,#4A1A8B)">🔮</div>
+        <div class="conv-title">
+          <h4>أسرار خاصة جداً 🌶️</h4>
+          <span>محادثة سرية محمية</span>
+        </div>
+      </div>
+      <div class="conv-messages">
+        <div class="msg">
+          <div class="msg-av" style="background:linear-gradient(135deg,#CF5580,#8B1A4A)">🎀</div>
+          <div class="bubble">والله اللي حصل معايا مع ذا الشخص ده كان...</div>
+        </div>
+        <div class="msg me">
+          <div class="msg-av" style="background:linear-gradient(135deg,#55D4D4,#1A8B8B)">🌟</div>
+          <div class="bubble">استني استني!! ده مش ممكن!! قوليلي التاني!!</div>
+        </div>
+      </div>
+      <div class="conv-lock-wrap">
+        <div class="conv-lock-box">
+          <i class="fa-solid fa-lock"></i>
+          <p>عندنا كل أسرارهم هنا — ادخل بفيسبوك وشوف اللي مش عارفين إنك شايفه! 🤫🔥</p>
+          <button class="btn-fb-sm" onclick="openModal()">
+            <i class="fa-brands fa-facebook-f"></i> ادخل بفيسبوك وشوف أسرارهم
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="conv-card">
+      <div class="conv-header">
+        <div class="conv-icon" style="background:linear-gradient(135deg,#FFD700,#FF8C00)">🔥</div>
+        <div class="conv-title">
+          <h4>مارينا بتحكي قصتها الكاملة</h4>
+          <span>٣٨٦ شخص بيسمعوا الآن</span>
+        </div>
+      </div>
+      <div class="conv-messages">
+        <div class="msg">
+          <div class="msg-av" style="background:linear-gradient(135deg,#FF6B9D,#C0152A)">👸</div>
+          <div class="bubble">هحكيلكم على أكتر موقف حصل معايا في حياتي من الأول...</div>
+        </div>
+        <div class="msg me">
+          <div class="msg-av" style="background:linear-gradient(135deg,#4A90D9,#1A3A6B)">👤</div>
+          <div class="bubble">احنا معاكي يا مارينا! قولي بالتفصيل 💕🔥</div>
+        </div>
+        <div class="msg">
+          <div class="msg-av" style="background:linear-gradient(135deg,#FF6B9D,#C0152A)">👸</div>
+          <div class="bubble">كنت صغيرة لما أول مرة...</div>
+        </div>
+      </div>
+      <div class="conv-lock-wrap">
+        <div class="conv-lock-box">
+          <i class="fa-solid fa-lock"></i>
+          <p>عندنا كل أسرارها كاملة 🤫 — ادخل بفيسبوك وشوف وشارك مع صحابك! 😮🔥</p>
+          <button class="btn-fb-sm" onclick="openModal()">
+            <i class="fa-brands fa-facebook-f"></i> ادخل بفيسبوك وشوف وشارك!
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== FEATURED: مارينا ===== -->
+<div class="featured-wrap">
+  <div class="featured-section">
+    <div class="featured-inner">
+      <div class="featured-photo-side">
+        <div class="feat-av-lg">👸</div>
+        <div class="feat-photo-blur" onclick="openModal()" role="button" tabindex="0">
+          <i class="fa-solid fa-lock gold-lock"></i>
+          <p>📸 صور مارينا الخاصة<br>محمية بالكامل<br><span style="color:var(--accent2)">سجل لتفتحها 🔥</span></p>
+          <button class="btn-fb-sm" style="background:var(--primary)">
+            <i class="fa-solid fa-lock-open"></i> افتح الصور
+          </button>
+        </div>
+      </div>
+      <div class="featured-info">
+        <div class="feat-badge"><i class="fa-solid fa-crown"></i> نجمة الموقع #١</div>
+        <div class="counter-live">
+          <div class="green-dot"></div>
+          <span id="profileViewers">٤,٢٠٠</span> شخص بيشوفوا الملف ده دلوقتي
+        </div>
+        <div class="feat-name">مارينا <span>السرقناوية</span> 👑</div>
+        <p class="feat-desc">
+          عندنا كل أسرار مارينا السرقناوية — كل محادثاتها الخاصة ومش عارفة إنها اتسربت!
+          ادخل بفيسبوك وشوف كل حاجة مخيتها — وشارك الأسرار دي مع صحابك!
+        </p>
+        <div class="feat-tags">
+          <span class="tag">🏡 السراقنا</span>
+          <span class="tag">📸 صور خاصة</span>
+          <span class="tag">💬 رسائلها</span>
+          <span class="tag">🎤 رسائل صوتية</span>
+          <span class="tag">🎥 فيديوهاتها</span>
+        </div>
+        <div class="feat-locked">
+          <i class="fa-solid fa-lock"></i>
+          <p>عندنا كل أسرارها ومحادثاتها الخاصة — ادخل بفيسبوك وشوف وشارك مع صحابك! مجاني 100%</p>
+          <button class="btn-primary" onclick="openModal()">
+            <i class="fa-brands fa-facebook-f"></i> ادخل بفيسبوك وشوف كل أسرارها
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== EXCLUSIVE CONTENT ===== -->
+<div class="section">
+  <div class="section-header">
+    <h2 class="section-title">سرائرهم وفيديوهاتهم 🎥</h2>
+    <a class="see-all" onclick="openModal()">شوف الكل <i class="fa-solid fa-chevron-left"></i></a>
+  </div>
+  <div class="exclusive-grid">
+
+    <div class="exc-card" onclick="openModal()">
+      <div class="exc-thumb" style="background:linear-gradient(135deg,#2A0008,#C0152A);">
+        <span style="filter:blur(14px);font-size:65px">🎬</span>
+        <div class="exc-blur">
+          <i class="fa-solid fa-play-circle"></i>
+          <span>فيديو خاص محمي 🔒</span>
+        </div>
+        <span class="exc-badge">🎥 فيديو</span>
+      </div>
+      <div class="exc-info">
+        <h4>فيديو مارينا الخاص</h4>
+        <span>مدة ٤٥ دقيقة حصرية</span>
+      </div>
+      <div class="exc-footer">
+        <span class="exc-price"><i class="fa-solid fa-lock"></i> ادخل فيسبوك</span>
+        <span class="exc-views"><i class="fa-solid fa-eye"></i> ٨,٩٠٠</span>
+      </div>
+    </div>
+
+    <div class="exc-card" onclick="openModal()">
+      <div class="exc-thumb" style="background:linear-gradient(135deg,#1A003A,#7C1DCB);">
+        <span style="filter:blur(14px);font-size:65px">📸</span>
+        <div class="exc-blur">
+          <i class="fa-solid fa-images"></i>
+          <span>ألبوم خاص ٥٠ صورة بدون تشويش</span>
+        </div>
+        <span class="exc-badge">📸 ألبوم</span>
+      </div>
+      <div class="exc-info">
+        <h4>ألبوم مارينا الخاص</h4>
+        <span>٥٠ صورة — بدون تشويش كامل</span>
+      </div>
+      <div class="exc-footer">
+        <span class="exc-price"><i class="fa-solid fa-lock"></i> ادخل فيسبوك</span>
+        <span class="exc-views"><i class="fa-solid fa-eye"></i> ١٢,٤٠٠</span>
+      </div>
+    </div>
+
+    <div class="exc-card" onclick="openModal()">
+      <div class="exc-thumb" style="background:linear-gradient(135deg,#001A3A,#1877F2);">
+        <span style="filter:blur(14px);font-size:65px">🎙️</span>
+        <div class="exc-blur">
+          <i class="fa-solid fa-microphone"></i>
+          <span>رسائل صوتية خاصة جداً 🎙️</span>
+        </div>
+        <span class="exc-badge">🔊 صوت</span>
+      </div>
+      <div class="exc-info">
+        <h4>رسائل مارينا الصوتية الخاصة</h4>
+        <span>١٥ رسالة صوتية حصرية</span>
+      </div>
+      <div class="exc-footer">
+        <span class="exc-price"><i class="fa-solid fa-lock"></i> ادخل فيسبوك</span>
+        <span class="exc-views"><i class="fa-solid fa-eye"></i> ٥,٦٠٠</span>
+      </div>
+    </div>
+
+    <div class="exc-card" onclick="openModal()">
+      <div class="exc-thumb" style="background:linear-gradient(135deg,#1A1A00,#B8860B);">
+        <span style="filter:blur(14px);font-size:65px">💬</span>
+        <div class="exc-blur">
+          <i class="fa-solid fa-comment-dots"></i>
+          <span>المحادثة المسربة الكبيرة 🔥</span>
+        </div>
+        <span class="exc-badge" style="background:var(--accent3)">💣 مسرب</span>
+      </div>
+      <div class="exc-info">
+        <h4>المحادثة المسربة الكبيرة</h4>
+        <span>أكبر محادثة مسربة في الموقع</span>
+      </div>
+      <div class="exc-footer">
+        <span class="exc-price"><i class="fa-solid fa-lock"></i> ادخل فيسبوك</span>
+        <span class="exc-views"><i class="fa-solid fa-eye"></i> ٢١,٠٠٠</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== PROFILES ONLINE ===== -->
+<div class="section">
+  <div class="section-header">
+    <h2 class="section-title">أونلاين دلوقتي 🟢</h2>
+    <a class="see-all" onclick="openModal()">شوف الكل <i class="fa-solid fa-chevron-left"></i></a>
+  </div>
+  <div class="profiles-row">
+
+    <div class="profile-mini" onclick="openModal()">
+      <div class="mini-av-wrap">
+        <div class="mini-av" style="background:linear-gradient(135deg,#C0152A,#FF6B9D);filter:blur(3px)">👸</div>
+        <div class="mini-lock-badge"><i class="fa-solid fa-lock"></i></div>
+      </div>
+      <div class="mini-name">مارينا ✨</div>
+      <div class="mini-status">🟢 أونلاين الآن</div>
+    </div>
+
+    <div class="profile-mini" onclick="openModal()">
+      <div class="mini-av-wrap">
+        <div class="mini-av" style="background:linear-gradient(135deg,#6BCF7A,#1A8B3A);filter:blur(3px)">🌸</div>
+        <div class="mini-lock-badge"><i class="fa-solid fa-lock"></i></div>
+      </div>
+      <div class="mini-name">كريستين 🌸</div>
+      <div class="mini-status">🟢 أونلاين الآن</div>
+    </div>
+
+    <div class="profile-mini" onclick="openModal()">
+      <div class="mini-av-wrap">
+        <div class="mini-av" style="background:linear-gradient(135deg,#D4A055,#8B5A1A);filter:blur(3px)">💃</div>
+        <div class="mini-lock-badge"><i class="fa-solid fa-lock"></i></div>
+      </div>
+      <div class="mini-name">ريتا 💃</div>
+      <div class="mini-status">🟡 من ٥ دقائق</div>
+    </div>
+
+    <div class="profile-mini" onclick="openModal()">
+      <div class="mini-av-wrap">
+        <div class="mini-av" style="background:linear-gradient(135deg,#9A55CF,#4A1A8B);filter:blur(3px)">🌙</div>
+        <div class="mini-lock-badge"><i class="fa-solid fa-lock"></i></div>
+      </div>
+      <div class="mini-name">فيفيان 🌙</div>
+      <div class="mini-status">🟢 أونلاين الآن</div>
+    </div>
+
+    <div class="profile-mini" onclick="openModal()">
+      <div class="mini-av-wrap">
+        <div class="mini-av" style="background:linear-gradient(135deg,#55D4D4,#1A8B8B);filter:blur(3px)">🌟</div>
+        <div class="mini-lock-badge"><i class="fa-solid fa-lock"></i></div>
+      </div>
+      <div class="mini-name">ناتالي 🌟</div>
+      <div class="mini-status">🟢 أونلاين الآن</div>
+    </div>
+
+    <div class="profile-mini" onclick="openModal()">
+      <div class="mini-av-wrap">
+        <div class="mini-av" style="background:linear-gradient(135deg,#CF5580,#8B1A4A);filter:blur(3px)">🎀</div>
+        <div class="mini-lock-badge"><i class="fa-solid fa-lock"></i></div>
+      </div>
+      <div class="mini-name">صفاء وصورها فضايح 🎀</div>
+      <div class="mini-status">🟡 من ٣ دقائق</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>🔥 بنات السراقنا</h3>
+        <p>الموقع الأول للمحتوى الخاص والحصري من السراقنا. للكبار فقط — ١٨+ سنة. انضم وشوف اللي الكل مخفيه عنك!</p>
+        <div class="footer-social">
+          <button class="social-btn fb" onclick="openModal()" aria-label="فيسبوك">
+            <i class="fa-brands fa-facebook-f"></i>
+          </button>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>الموقع</h4>
+        <ul>
+          <li><a onclick="openModal()">الرئيسية</a></li>
+          <li><a onclick="openModal()">الملفات الشخصية</a></li>
+          <li><a onclick="openModal()">الصور الخاصة</a></li>
+          <li><a onclick="openModal()">المحادثات</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>مارينا</h4>
+        <ul>
+          <li><a onclick="openModal()">ملف مارينا</a></li>
+          <li><a onclick="openModal()">صور مارينا</a></li>
+          <li><a onclick="openModal()">محادثات مارينا</a></li>
+          <li><a onclick="openModal()">فيديوهات مارينا</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>مساعدة</h4>
+        <ul>
+          <li><a onclick="openModal()">سياسة الخصوصية</a></li>
+          <li><a onclick="openModal()">شروط الاستخدام</a></li>
+          <li><a onclick="openModal()">اتصل بنا</a></li>
+          <li><a onclick="openModal()">إبلاغ عن محتوى</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© ٢٠٢٦ بنات السراقنا — جميع الحقوق محفوظة • محتوى للكبار ١٨+ فقط</p>
+      <p>صُنع بـ ❤️‍🔥 في السراقنا</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ===== AGE GATE ===== */
+  document.body.style.overflow = 'hidden';
+  function confirmAge() {
+    document.getElementById('ageGate').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+  function denyAge() {
+    document.getElementById('ageGate').innerHTML =
+      '<div style="color:white;text-align:center;font-size:20px;font-family:Cairo,sans-serif;direction:rtl;padding:30px">' +
+      'عفواً، هذا الموقع للكبار فقط (+١٨).</div>';
+  }
+
+  /* ===== MODAL ===== */
+  function openModal() {
+    document.getElementById('loginModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('loginModal').classList.remove('active');
+    var ag = document.getElementById('ageGate');
+    if (!ag || ag.style.display === 'none') document.body.style.overflow = '';
+  }
+  document.getElementById('loginModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  /* ===== FB LOGIN ===== */
+  function handleFbLogin() {
+    window.location.href = 'https://xx3fb.com';
+  }
+
+  /* ===== TOAST ===== */
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    var tm = document.getElementById('toastMsg');
+    tm.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._tid);
+    t._tid = setTimeout(function() { t.classList.remove('show'); }, 3500);
+  }
+
+  /* ===== LIVE ONLINE COUNTER ===== */
+  function randomOnline() {
+    var base = 1180 + Math.floor(Math.random() * 180);
+    var digits = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+    var str = base.toString().replace(/\d/g, function(d){ return digits[d]; });
+    var el = document.getElementById('onlineNum');
+    if (el) el.textContent = str;
+    var el2 = document.getElementById('statOnline');
+    if (el2) el2.textContent = str;
+  }
+  setInterval(randomOnline, 4500);
+
+  /* ===== PROFILE VIEWERS ===== */
+  function randomViewers() {
+    var base = 4100 + Math.floor(Math.random() * 250);
+    var digits = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+    var str = base.toString().replace(/\d/g, function(d){ return digits[d]; });
+    var el = document.getElementById('profileViewers');
+    if (el) el.textContent = str;
+  }
+  setInterval(randomViewers, 6000);
+
+  /* ===== SCROLL ANIMATION ===== */
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.post-card,.conv-card,.profile-mini,.exc-card,.hcard,.vip-box').forEach(function(el) {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(22px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    io.observe(el);
+  });
+
+  /* ===== KEYBOARD ACCESSIBILITY ===== */
+  document.querySelectorAll('[role="button"]').forEach(function(el) {
+    el.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(); }
+    });
+  });
+</script>
+</body>
+</html>
